@@ -121,8 +121,8 @@ Header: `Authorization: Bearer <jwt_token>`
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/<your-username>/<your-repo-name>.git
-cd "<your-repo-name>/backend"
+git clone https://github.com/astronomyadii-maker/student-registration-portal.gitt
+cd "student-registration-portal/backend"
 ```
 
 ### 2. Install dependencies
@@ -197,8 +197,9 @@ Open `frontent/Registration.html` in VS Code, right-click and choose **Open with
 
 **Aditya Yadav**
 Indira Gandhi Engineering College, Sagar (MP)
-LinkedIn: [your-linkedin-profile-link]
-GitHub: [your-github-profile-link]
+LinkedIn: www.linkedin.com/in/aditya-yadav-122bbb38a
+
+GitHub: https://github.com/astronomyadii-maker
 
 ---
 
