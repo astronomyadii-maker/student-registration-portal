@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | Indira Gandhi Engineering College</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="registration.css">
+</head>
+<body>
+
+    <header>
+        <h1>Indira Gandhi Engineering College</h1>
+        <h2>Affiliated to RGPV, Established in 1981</h2>
+    </header>
+
+    <nav aria-label="Main menu">
+        <a href="home.html">Home</a>
+        <a href="login.html">Student Login</a>
+        <a href="Registration.html" aria-current="page">Registration</a>
+        <a href="placement.html">Facilities</a>
+        <a href="placement.html">Departments</a>
+        <a href="about.html">About</a>
+    </nav>
+
+    <section id="Registration">
+        <h3>Student Registration</h3>
+
+        <div id="Details">
+            <form id= "register-form">
+                <label for="fname">Full name</label>
+                <input type="text" id="fname" name="fname" placeholder="Enter your name" autocomplete="name" required>
+
+                <label for="enroll">Enrollment no.</label>
+                <input type="text" id="enroll" name="enroll" placeholder="Enrollment no." required>
+
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" autocomplete="email" required>
+
+                <label for="DOB">Date of birth</label>
+                <input type="date" id="DOB" name="dob" required>
+
+                <label>Gender</label>
+                <div class="radio-row">
+                    <input type="radio" id="Male" name="gender" value="Male" required>
+                    <label for="Male">Male</label>
+                </div>
+                <div class="radio-row">
+                    <input type="radio" id="Female" name="gender" value="Female">
+                    <label for="Female">Female</label>
+                </div>
+
+                <label for="Department">Branch</label>
+                <select id="Department" name="branch" required>
+                    <option value="" disabled selected>Select your branch</option>
+                    <option value="it">Information Technology</option>
+                    <option value="ec">Electronics &amp; Communication Engineering</option>
+                    <option value="me">Mechanical Engineering</option>
+                    <option value="ce">Civil Engineering</option>
+                    <option value="ee">Electrical Engineering</option>
+                </select>
+
+                <label for="cpass">Create password</label>
+                <input type="password" id="cpass" name="password" placeholder="Create a password" autocomplete="new-password" required>
+
+                <label for="gpass">Confirm password</label>
+                <input type="password" id="gpass" name="confirm" placeholder="Confirm your password" autocomplete="new-password" required>
+
+                <button type="submit">Register</button>
+                <p id="msg"></p>
+            </form>
+
+            <div class="toggle_links">Already registered? <a href="login.html">Login here</a></div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 Indira Gandhi Engineering College, Sagar
+    </footer>
+<script>
+  const API = "http://localhost:5000/api";
+
+  document.getElementById("register-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    const data = Object.fromEntries(new FormData(e.target));
+
+    if (data.password !== data.confirm) {
+      msg.textContent = "Passwords do not match";
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
+      msg.textContent = result.message;
+      if (res.ok) setTimeout(() => (window.location.href = "login.html"), 1000);
+    } catch (err) {
+      msg.textContent = "Server se connect nahi ho paya";
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placements &amp; Faculty | Indira Gandhi Engineering College</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="placement.css">
+</head>
+<body>
+
+<nav aria-label="Main menu">
+    <a href="home.html">Home</a>
+    <a href="login.html">Student Login</a>
+    <a href="Registration.html">Registration</a>
+    <a href="placement.html" aria-current="page">Facilities</a>
+    <a href="placement.html">Departments</a>
+    <a href="about.html">About</a>
+</nav>
+
+<!-- ===================== PLACEMENTS ===================== -->
+<section class="igec-section" id="placements" aria-labelledby="pl-title">
+  <div class="igec-wrap">
+
+    <div class="pl-top">
+      <div>
+        <h2 id="pl-title">Placements at IGEC Sagar</h2>
+        <p class="igec-lead">Our Training &amp; Placement Cell prepares students from the first year, with aptitude training, technical workshops and mock interviews, so they are ready when recruiters visit campus.</p>
+      </div>
+      <div class="pl-stats">
+        <div class="pl-stat"><b>50+</b><span>Companies visited last year</span></div>
+        <div class="pl-stat"><b>70%</b><span>Students placed</span></div>
+        <div class="pl-stat"><b>15 LPA</b><span>Highest package</span></div>
+        <div class="pl-stat"><b>3.5 LPA</b><span>Average package</span></div>
+      </div>
+    </div>
+
+    <div class="pl-grid">
+      <div>
+        <h3>Students placed each year</h3>
+        <!-- bar height = students / highest value x 100 (highest = 120) -->
+        <div class="pl-chart" role="img" aria-label="Bar chart of students placed each year">
+          <div class="pl-bar"><span>92+</span><i style="--h:77%"></i></div>
+          <div class="pl-bar"><span>80+</span><i style="--h:67%"></i></div>
+          <div class="pl-bar"><span>100+</span><i style="--h:83%"></i></div>
+          <div class="pl-bar"><span>120+</span><i style="--h:100%"></i></div>
+        </div>
+        <div class="pl-years"><span>2022-23</span><span>2023-24</span><span>2024-25</span><span>2025-26</span></div>
+      </div>
+
+      <div>
+        <h3>Recruiters who visit us</h3>
+        <ul class="pl-recruiters">
+          <li>TCS</li>
+          <li>Infosys</li>
+          <li>Wipro</li>
+          <li>Cognizant</li>
+          <li>Adobe</li>
+          <li>MRF</li>
+          <li>Voltas</li>
+          <li>Samsung</li>
+        </ul>
+        <p class="pl-note">Placement figures are indicative. Please refer to the Training &amp; Placement Cell for the latest data.</p>
+      </div>
+    </div>
+
+    <ol class="pl-process">
+      <li><strong>Training</strong><p>Aptitude, reasoning and communication classes.</p></li>
+      <li><strong>Pre-placement talk</strong><p>Companies explain roles, skills and selection rounds.</p></li>
+      <li><strong>Selection rounds</strong><p>Online test, technical interview and HR interview.</p></li>
+      <li><strong>Offer letter</strong><p>Selected students receive offers on campus.</p></li>
+    </ol>
+
+  </div>
+</section>
+
+<!-- ===================== FACULTY ===================== -->
+<section class="igec-section" id="faculty" aria-labelledby="fac-title">
+  <div class="igec-wrap">
+
+    <div class="fac-head">
+      <div>
+        <h2 id="fac-title">Our Faculty</h2>
+        <p class="igec-lead">Experienced teachers and mentors who guide students in the classroom, in labs and in projects.</p>
+      </div>
+      <div class="fac-tabs" role="group" aria-label="Filter faculty by department">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="it" aria-pressed="false">Information Technology</button>
+        <button type="button" data-filter="ece" aria-pressed="false">Electronics</button>
+        <button type="button" data-filter="me" aria-pressed="false">Mechanical</button>
+        <button type="button" data-filter="ce" aria-pressed="false">Civil</button>
+      </div>
+    </div>
+
+    <div class="fac-grid">
+
+      <article class="fac-card" data-dept="it">
+        <div class="fac-avatar" aria-hidden="true">NS</div>
+        <h3>Dr. Neha Sharma</h3>
+        <p class="fac-role">Head, Information Technology</p>
+        <dl class="fac-meta">
+          <div><dt>Qualification: </dt><dd>Ph.D., M.Tech</dd></div>
+          <div><dt>Experience: </dt><dd>15 years</dd></div>
+          <div><dt>Expertise: </dt><dd>Machine Learning, Databases</dd></div>
+        </dl>
+      </article>
+
+      <article class="fac-card" data-dept="it">
+        <div class="fac-avatar" aria-hidden="true">RS</div>
+        <h3>Prof. Rajesh Sir</h3>
+        <p class="fac-role">Assistant Professor, Information Technology</p>
+        <dl class="fac-meta">
+          <div><dt>Qualification: </dt><dd>M.Tech</dd></div>
+          <div><dt>Experience: </dt><dd>8 years</dd></div>
+          <div><dt>Expertise: </dt><dd>Web Development, Networks</dd></div>
+        </dl>
+      </article>
+
+      <article class="fac-card" data-dept="ece">
+        <div class="fac-avatar" aria-hidden="true">MR</div>
+        <h3>Dr. Maniram</h3>
+        <p class="fac-role">Head, Electronics</p>
+        <dl class="fac-meta">
+          <div><dt>Qualification: </dt><dd>Ph.D., M.Tech</dd></div>
+          <div><dt>Experience: </dt><dd>20 years</dd></div>
+          <div><dt>Expertise: </dt><dd>VLSI, Embedded Systems</dd></div>
+        </dl>
+      </article>
+
+      <article class="fac-card" data-dept="me">
+        <div class="fac-avatar" aria-hidden="true">RP</div>
+        <h3>Dr. Rajendar Prasad</h3>
+        <p class="fac-role">Associate Professor, Mechanical</p>
+        <dl class="fac-meta">
+          <div><dt>Qualification: </dt><dd>Ph.D., M.Tech</dd></div>
+          <div><dt>Experience: </dt><dd>15 years</dd></div>
+          <div><dt>Expertise: </dt><dd>Thermal Engineering, CAD/CAM</dd></div>
+        </dl>
+      </article>
+
+      <article class="fac-card" data-dept="ce">
+        <div class="fac-avatar" aria-hidden="true">RW</div>
+        <h3>Prof. Rawat Sir</h3>
+        <p class="fac-role">Assistant Professor, Civil</p>
+        <dl class="fac-meta">
+          <div><dt>Qualification: </dt><dd>M.Tech</dd></div>
+          <div><dt>Experience: </dt><dd>13 years</dd></div>
+          <div><dt>Expertise: </dt><dd>Structural Engineering</dd></div>
+        </dl>
+      </article>
+
+      <article class="fac-card" data-dept="ce">
+        <div class="fac-avatar" aria-hidden="true">SJ</div>
+        <h3>Prof. Satish Kumar Jain</h3>
+        <p class="fac-role">Assistant Professor, Civil</p>
+        <dl class="fac-meta">
+          <div><dt>Qualification: </dt><dd>M.Tech</dd></div>
+          <div><dt>Experience: </dt><dd>14 years</dd></div>
+          <div><dt>Expertise: </dt><dd>Geotechnical Engineering</dd></div>
+        </dl>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+    &copy; 2026 Indira Gandhi Engineering College, Sagar
+</footer>
+
+<script>
+  // Department filter for the faculty cards
+  (function () {
+    var buttons = document.querySelectorAll('.fac-tabs button');
+    var cards = document.querySelectorAll('.fac-card');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var f = btn.getAttribute('data-filter');
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+        cards.forEach(function (c) {
+          c.hidden = !(f === 'all' || c.getAttribute('data-dept') === f);
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

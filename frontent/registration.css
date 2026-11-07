@@ -1,0 +1,35 @@
+/* registration.css - Student registration page (use together with common.css) */
+#Registration {
+  width: min(100% - 32px, 580px);
+  margin: 40px auto;
+  padding: clamp(24px, 5vw, 40px);
+  background: var(--white);
+  border-radius: var(--radius);
+  border-top: 4px solid var(--saffron);
+  box-shadow: var(--shadow);
+}
+
+#Registration h3 {
+  margin: 0 0 24px;
+  text-align: center;
+  font-family: var(--head);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+#Registration form br { display: none; }   /* spacing comes from CSS */
+
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0 0 4px;
+  align-self: flex-start;
+  accent-color: var(--navy);
+  cursor: pointer;
+}
+
+/* optional: wrap each radio in <div class="radio-row"> for a tidy row */
+.radio-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.radio-row label, .radio-row lable { margin: 0; font-weight: 500; }
+.radio-row input[type="radio"] { margin: 0; }

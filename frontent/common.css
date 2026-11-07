@@ -1,0 +1,158 @@
+/* =====================================================
+   common.css - shared by about, login, registration, placement
+   ===================================================== */
+:root {
+  --navy: #14213d;
+  --navy-2: #1d2f57;
+  --navy-3: #23396b;
+  --ink: #1b2438;
+  --ink-soft: #4a5673;
+  --paper: #f4f6fb;
+  --white: #ffffff;
+  --line: #cfd6e6;
+  --saffron: #f0a202;
+  --teal: #0f766e;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(20, 33, 61, 0.12);
+  --head: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Public Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--saffron);
+  outline-offset: 2px;
+}
+
+/* ---------- Page header ---------- */
+body > header {
+  text-align: center;
+  padding: clamp(28px, 5vw, 48px) 20px;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(240, 162, 2, 0.18), transparent 45%),
+    linear-gradient(135deg, var(--navy), var(--navy-3));
+}
+body > header h1 {
+  margin: 0;
+  font-family: var(--head);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+}
+body > header h2 {
+  margin: 8px 0 0;
+  font-size: clamp(.9rem, 2vw, 1.05rem);
+  font-weight: 500;
+  color: #b9c2d9;
+}
+
+/* ---------- Navigation ---------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 16px;
+  background: var(--white);
+  border-bottom: 3px solid var(--saffron);
+  box-shadow: 0 4px 18px rgba(20, 33, 61, 0.08);
+}
+nav a {
+  padding: 9px 16px;
+  border-radius: 999px;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: .95rem;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+nav a:hover { background: var(--navy); color: var(--white); }
+nav a[aria-current="page"] { background: var(--saffron); color: var(--navy); }
+
+/* ---------- Footer ---------- */
+body > footer {
+  margin-top: auto;
+  padding: 22px 20px;
+  text-align: center;
+  font-size: .88rem;
+  color: #c9d2e6;
+  background: var(--navy);
+}
+
+/* ---------- Form controls (login + registration) ---------- */
+form { display: flex; flex-direction: column; }
+
+label, lable {                     /* "lable" = typo support */
+  display: block;
+  margin: 16px 0 6px;
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+form > :first-child { margin-top: 0; }
+
+input:not([type="radio"]):not([type="checkbox"]),
+select {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+input::placeholder { color: #8b95ad; }
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(240, 162, 2, .35);
+}
+
+button[type="submit"] {
+  margin-top: 24px;
+  padding: 13px 18px;
+  font: 600 1rem var(--body);
+  color: var(--white);
+  background: var(--navy);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .1s ease;
+}
+button[type="submit"]:hover { background: var(--saffron); color: var(--navy); }
+button[type="submit"]:active { transform: translateY(1px); }
+
+.toggle_links {
+  margin-top: 20px;
+  text-align: center;
+  font-size: .92rem;
+  color: var(--ink-soft);
+}
+.toggle_links a { color: var(--teal); font-weight: 600; text-decoration: none; }
+.toggle_links a:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

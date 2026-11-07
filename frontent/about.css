@@ -1,0 +1,50 @@
+/* about.css - About page (use together with common.css) */
+#about {
+  width: min(100% - 32px, 780px);
+  margin: 40px auto;
+  padding: clamp(24px, 5vw, 48px);
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+#about h1 {
+  margin: 0 0 22px;
+  font-family: var(--head);
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-weight: 800;
+  color: var(--navy);
+}
+#about h1::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 10px;
+  background: var(--saffron);
+  border-radius: 4px;
+}
+
+#about p {
+  margin: 0 0 18px;
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+}
+
+/* contact details box (the last paragraph) */
+#about p:last-of-type {
+  margin: 28px 0 0;
+  padding: 18px 22px;
+  line-height: 2;
+  color: var(--ink);
+  background: var(--paper);
+  border-left: 4px solid var(--saffron);
+  border-radius: 10px;
+}
+#about strong {
+  display: inline-block;
+  min-width: 5.5rem;
+  margin-right: 6px;
+  color: var(--navy);
+  text-transform: capitalize;
+}

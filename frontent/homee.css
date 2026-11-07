@@ -1,0 +1,233 @@
+/* =====================================================
+   Indira Gandhi Engineering College, Sagar - home page
+   File: homee.css
+   ===================================================== */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --navy: #14213d;
+  --navy-2: #1d2f57;
+  --navy-3: #23396b;
+  --saffron: #f0a202;
+  --paper: #f4f6fb;
+  --white: #ffffff;
+  --ink: #1b2438;
+  --line: #cfd6e6;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(20, 33, 61, 0.14);
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--saffron);
+  outline-offset: 2px;
+}
+
+/* ---------- Top bar (contact + social) ---------- */
+.Top.bar,
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 28px;
+  padding: 10px clamp(16px, 4vw, 48px);
+  background: var(--navy);
+  color: #dfe5f3;
+  font-size: 0.88rem;
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.social { margin-left: auto; }
+
+#instagram_icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+#instagram_icon:hover { transform: scale(1.15); }
+
+/* ---------- Navigation banner ---------- */
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 12px clamp(16px, 4vw, 48px);
+  background: var(--white);
+  border-bottom: 3px solid var(--saffron);
+  box-shadow: 0 4px 18px rgba(20, 33, 61, 0.08);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+nav br { display: none; }   /* links sit in one row, ignore <br> */
+
+nav a {
+  padding: 9px 16px;
+  border-radius: 999px;
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+nav a:hover { background: var(--navy); color: var(--white); }
+nav a[aria-current="page"] { background: var(--saffron); color: var(--navy); }
+
+/* ---------- Department dropdown ---------- */
+#department {
+  padding: 10px 40px 10px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--navy);
+  background: var(--white)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2314213d' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat right 14px center / 12px;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+#department:hover { border-color: var(--navy); }
+
+/* ---------- Quote marquee ---------- */
+.Quote {
+  background: var(--navy-2);
+  color: var(--white);
+  padding: 12px 0;
+  font-style: italic;
+  font-size: 1.02rem;
+}
+.Quote marquee { display: block; }
+
+/* ---------- Hero heading ---------- */
+.hero,
+.container > div:not(.banner):not(.Quote) {
+  text-align: center;
+  padding: clamp(44px, 8vw, 96px) 20px;
+  color: var(--white);
+  background:
+    radial-gradient(circle at 80% 20%, rgba(240, 162, 2, 0.18), transparent 45%),
+    linear-gradient(135deg, var(--navy), var(--navy-3));
+}
+
+.hero h2,
+.container > div:not(.banner):not(.Quote) h2 {
+  margin: 0 auto;
+  max-width: 20ch;
+  font-size: clamp(1.9rem, 4.8vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+}
+
+.hero h2::after,
+.container > div:not(.banner):not(.Quote) h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 20px auto 0;
+  background: var(--saffron);
+  border-radius: 4px;
+}
+
+/* ---------- Album ---------- */
+#Album {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(36px, 6vw, 72px) 20px;
+}
+
+#Album section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+#Album h2 {
+  grid-column: 1 / -1;
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800;
+  color: var(--navy);
+}
+#Album h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 10px;
+  background: var(--saffron);
+  border-radius: 4px;
+}
+
+#Album img {
+  width: 100%;
+  height: clamp(200px, 22vw, 280px);
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#Album img:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(20, 33, 61, 0.22);
+}
+#Album img:first-of-type { grid-column: span 2; }   /* featured photo */
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  #Album section { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .social { margin-left: 0; }
+
+  .banner { flex-direction: column; align-items: stretch; }
+  nav { justify-content: center; }
+  #department { width: 100%; }
+
+  #Album section { grid-template-columns: 1fr; }
+  #Album img:first-of-type { grid-column: auto; }
+}
+
+/* ---------- Respect reduced-motion setting ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
