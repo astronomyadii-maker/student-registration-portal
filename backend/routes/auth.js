@@ -2,7 +2,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-
+const Blog = require("../models/Blog");
+const auth = require("../middleware/auth");
 const router = express.Router();
 
 // POST /api/register
@@ -61,4 +62,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// GET /api/me  (profile, login required)
+router.get("/me", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    const blogCount = await Blog.countDocuments({ author: user._id });
+    res.json({ user, blogCount });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
 module.exports = router;

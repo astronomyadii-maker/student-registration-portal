@@ -21,6 +21,18 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+// READ MY BLOGS (sirf logged-in user ke)
+router.get("/mine", auth, async (req, res) => {
+  try {
+    const blogs = await Blog.find({ author: req.userId })
+      .populate("author", "name enroll")
+      .sort({ createdAt: -1 });
+    res.json(blogs);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
 // READ ALL  (?search=node&category=Technology)
 router.get("/", async (req, res) => {
   try {

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Indira Gandhi Engineering College</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <nav aria-label="Main menu">
+        <a href="home.html">Home</a>
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+    </nav>
+
+    <section>
+        <h2>My Profile</h2>
+        <div id="profile">Loading...</div>
+        <button type="button" id="logout-btn">Logout</button>
+
+        <h2>My Blogs</h2>
+        <p><a href="blog.html">+ Write a new blog</a></p>
+        <p id="msg"></p>
+        <div id="my-blogs"></div>
+    </section>
+
+    <script>
+        const API = "http://localhost:5000/api";
+        const token = localStorage.getItem("token");
+        const $ = (x) => document.getElementById(x);
+        const BRANCHES = {
+            it: "Information Technology",
+            ec: "Electronics & Communication",
+            me: "Mechanical Engineering",
+            ce: "Civil Engineering",
+            ee: "Electrical Engineering",
+        };
+
+        function logout() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            window.location.href = "login.html";
+        }
+
+        // Route protection: token nahi ya invalid/expired ho to login pe bhejo
+        if (!token) window.location.href = "login.html";
+
+        async function api(path, options = {}) {
+            const res = await fetch(`${API}${path}`, {
+                ...options,
+                headers: { ...(options.headers || {}), Authorization: `Bearer ${token}` },
+            });
+            if (res.status === 401) { logout(); throw new Error("Session expired"); }
+            return res;
+        }
+
+        async function loadProfile() {
+            const res = await api("/me");
+            const { user, blogCount } = await res.json();
+            const rows = [
+                ["Name", user.name],
+                ["Enrollment No.", user.enroll],
+                ["Email", user.email],
+                ["Branch", BRANCHES[user.branch] || user.branch],
+                ["Gender", user.gender],
+                ["Date of birth", new Date(user.dob).toLocaleDateString()],
+                ["Member since", new Date(user.createdAt).toLocaleDateString()],
+                ["Total blogs", blogCount],
+            ];
+            const box = $("profile");
+            box.innerHTML = "";
+            rows.forEach(([label, value]) => {
+                const p = document.createElement("p");
+                const b = document.createElement("strong");
+                b.textContent = `${label}: `;
+                p.append(b, document.createTextNode(String(value)));
+                box.appendChild(p);
+            });
+        }
+
+        async function loadMyBlogs() {
+            const res = await api("/blogs/mine");
+            const blogs = await res.json();
+            const box = $("my-blogs");
+            box.innerHTML = "";
+            if (blogs.length === 0) {
+                box.textContent = "You haven't written any blogs yet.";
+                return;
+            }
+            blogs.forEach((b) => {
+                const div = document.createElement("div");
+                const h = document.createElement("h3");
+                const a = document.createElement("a");
+                const small = document.createElement("small");
+                const del = document.createElement("button");
+
+                a.href = `blog-detail.html?id=${b._id}`;
+                a.textContent = b.title;
+                h.appendChild(a);
+                small.textContent = `${b.category || "General"} • ${new Date(b.createdAt).toLocaleDateString()}`;
+
+                del.type = "button";
+                del.textContent = "Delete";
+                del.addEventListener("click", async () => {
+                    if (!confirm("Delete this blog permanently?")) return;
+                    const r = await api(`/blogs/${b._id}`, { method: "DELETE" });
+                    const result = await r.json();
+                    $("msg").textContent = result.message;
+                    if (r.ok) { loadMyBlogs(); loadProfile(); }
+                });
+
+                div.append(h, small, document.createElement("br"), del);
+                box.appendChild(div);
+            });
+        }
+
+        $("logout-btn").addEventListener("click", logout);
+
+        if (token) {
+            loadProfile().catch(() => {});
+            loadMyBlogs().catch(() => {});
+        }
+    </script>
+</body>
+</html>
