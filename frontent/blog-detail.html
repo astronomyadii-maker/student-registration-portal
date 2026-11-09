@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details | Indira Gandhi Engineering College</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <nav aria-label="Main menu">
+        <a href="home.html">Home</a>
+        <a href="login.html">Student Login</a>
+        <a href="Registration.html">Registration</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+    </nav>
+
+    <section>
+        <p><a href="blog.html">&larr; Back to all blogs</a></p>
+        <h2 id="title">Loading...</h2>
+        <p><small id="meta"></small></p>
+        <p id="content" style="white-space: pre-wrap;"></p>
+    </section>
+
+    <script>
+        const API = "http://localhost:5000/api";
+        const id = new URLSearchParams(window.location.search).get("id");
+
+        async function loadBlog() {
+            const title = document.getElementById("title");
+            if (!id) {
+                title.textContent = "No blog selected";
+                return;
+            }
+            try {
+                const res = await fetch(`${API}/blogs/${id}`);
+                const blog = await res.json();
+                if (!res.ok) {
+                    title.textContent = blog.message;
+                    return;
+                }
+                document.title = blog.title;
+                title.textContent = blog.title;
+                document.getElementById("meta").textContent =
+                    `By ${blog.author?.name || "Unknown"} • ${new Date(blog.createdAt).toLocaleDateString()}`;
+                document.getElementById("content").textContent = blog.content;
+            } catch (err) {
+                title.textContent = "Server se connect nahi ho paya";
+            }
+        }
+
+        loadBlog();
+    </script>
+</body>
+</html>

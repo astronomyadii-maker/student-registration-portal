@@ -45,10 +45,13 @@
             blogs.forEach((b) => {
                 const div = document.createElement("div");
                 const h = document.createElement("h3");
+                const a = document.createElement("a");
                 const p = document.createElement("p");
                 const small = document.createElement("small");
-                h.textContent = b.title;
-                p.textContent = b.content;
+                h.href = 'blog-detail.html?id=${b._id}';
+                p.textContent = b.title;
+                h.appendChild(a);
+                p.textContent = b.content.length > 150 ? b.content.slice(0, 150) + "..." : b.content;
                 small.textContent = `By ${b.author?.name || "Unknown"} • ${new Date(b.createdAt).toLocaleDateString()}`;
                 div.append(h, p, small);
                 box.appendChild(div);
