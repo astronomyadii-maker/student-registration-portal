@@ -51,9 +51,9 @@
 
         <p id="msg"></p>
     </section>
-
+ <script src="config.js"></script>
     <script>
-        const API = "http://localhost:5000/api";
+       
         const token = localStorage.getItem("token");
         const me = JSON.parse(localStorage.getItem("user") || "null");
         const id = new URLSearchParams(window.location.search).get("id");
