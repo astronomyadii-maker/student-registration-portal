@@ -17,37 +17,120 @@
 
     <section>
         <p><a href="blog.html">&larr; Back to all blogs</a></p>
-        <h2 id="title">Loading...</h2>
-        <p><small id="meta"></small></p>
-        <p id="content" style="white-space: pre-wrap;"></p>
+
+        <div id="view">
+            <h2 id="title">Loading...</h2>
+            <p><small id="meta"></small></p>
+            <p id="content" style="white-space: pre-wrap;"></p>
+            <div id="actions" hidden>
+                <button type="button" id="edit-btn">Edit</button>
+                <button type="button" id="delete-btn">Delete</button>
+            </div>
+        </div>
+
+        <form id="edit-form" hidden>
+            <label for="e-title">Title</label>
+            <input type="text" id="e-title" required>
+
+            <label for="e-category">Category</label>
+            <select id="e-category">
+                <option>General</option>
+                <option>Technology</option>
+                <option>Education</option>
+                <option>Campus Life</option>
+                <option>Career</option>
+            </select>
+
+            <label for="e-content">Content</label>
+            <textarea id="e-content" rows="6" required></textarea>
+
+            <button type="submit">Save changes</button>
+            <button type="button" id="cancel-btn">Cancel</button>
+        </form>
+
+        <p id="msg"></p>
     </section>
 
     <script>
         const API = "http://localhost:5000/api";
+        const token = localStorage.getItem("token");
+        const me = JSON.parse(localStorage.getItem("user") || "null");
         const id = new URLSearchParams(window.location.search).get("id");
+        const $ = (x) => document.getElementById(x);
+        let current = null;
+
+        function render(blog) {
+            current = blog;
+            document.title = blog.title;
+            $("title").textContent = blog.title;
+            $("meta").textContent =
+                `${blog.category || "General"} • By ${blog.author?.name || "Unknown"} • ${new Date(blog.createdAt).toLocaleDateString()}`;
+            $("content").textContent = blog.content;
+            // buttons sirf author ko dikhao (asli check backend karta hai)
+            $("actions").hidden = !(token && me && blog.author?.enroll === me.enroll);
+        }
 
         async function loadBlog() {
-            const title = document.getElementById("title");
-            if (!id) {
-                title.textContent = "No blog selected";
-                return;
-            }
+            if (!id) { $("title").textContent = "No blog selected"; return; }
             try {
                 const res = await fetch(`${API}/blogs/${id}`);
                 const blog = await res.json();
-                if (!res.ok) {
-                    title.textContent = blog.message;
-                    return;
-                }
-                document.title = blog.title;
-                title.textContent = blog.title;
-                document.getElementById("meta").textContent =
-                    `By ${blog.author?.name || "Unknown"} • ${new Date(blog.createdAt).toLocaleDateString()}`;
-                document.getElementById("content").textContent = blog.content;
+                if (!res.ok) { $("title").textContent = blog.message; return; }
+                render(blog);
             } catch (err) {
-                title.textContent = "Server se connect nahi ho paya";
+                $("title").textContent = "Server se connect nahi ho paya";
             }
         }
+
+        $("edit-btn").addEventListener("click", () => {
+            $("e-title").value = current.title;
+            $("e-category").value = current.category || "General";
+            $("e-content").value = current.content;
+            $("view").hidden = true;
+            $("edit-form").hidden = false;
+        });
+
+        $("cancel-btn").addEventListener("click", () => {
+            $("edit-form").hidden = true;
+            $("view").hidden = false;
+        });
+
+        $("edit-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch(`${API}/blogs/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    title: $("e-title").value,
+                    category: $("e-category").value,
+                    content: $("e-content").value,
+                }),
+            });
+            const result = await res.json();
+            $("msg").textContent = result.message;
+            if (res.ok) {
+                $("edit-form").hidden = true;
+                $("view").hidden = false;
+                loadBlog();
+            }
+        });
+
+        $("delete-btn").addEventListener("click", async () => {
+            if (!confirm("Delete this blog permanently?")) return;
+            const res = await fetch(`${API}/blogs/${id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            const result = await res.json();
+            if (res.ok) {
+                window.location.href = "blog.html";
+            } else {
+                $("msg").textContent = result.message;
+            }
+        });
 
         loadBlog();
     </script>

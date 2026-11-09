@@ -21,6 +21,15 @@
             <label for="title">Title</label>
             <input type="text" id="title" required>
 
+            <label for="category">Category</label>
+            <select id="category">
+                <option>General</option>
+                <option>Technology</option>
+                <option>Education</option>
+                <option>Campus Life</option>
+                <option>Career</option>
+            </select>
+
             <label for="content">Content</label>
             <textarea id="content" rows="6" required></textarea>
 
@@ -29,6 +38,15 @@
         <p id="msg"></p>
 
         <h2>All Blogs</h2>
+        <input type="text" id="search" placeholder="Search blogs...">
+        <select id="filter" aria-label="Filter by category">
+            <option>All</option>
+            <option>General</option>
+            <option>Technology</option>
+            <option>Education</option>
+            <option>Campus Life</option>
+            <option>Career</option>
+        </select>
         <div id="blogs"></div>
     </section>
 
@@ -38,21 +56,36 @@
         if (!token) window.location.href = "login.html";
 
         async function loadBlogs() {
-            const res = await fetch(`${API}/blogs`);
+            const params = new URLSearchParams();
+            const search = document.getElementById("search").value.trim();
+            const category = document.getElementById("filter").value;
+            if (search) params.set("search", search);
+            if (category !== "All") params.set("category", category);
+
+            const res = await fetch(`${API}/blogs?${params}`);
             const blogs = await res.json();
             const box = document.getElementById("blogs");
             box.innerHTML = "";
+
+            if (blogs.length === 0) {
+                box.textContent = "No blogs found.";
+                return;
+            }
+
             blogs.forEach((b) => {
                 const div = document.createElement("div");
                 const h = document.createElement("h3");
                 const a = document.createElement("a");
                 const p = document.createElement("p");
                 const small = document.createElement("small");
-                h.href = 'blog-detail.html?id=${b._id}';
-                p.textContent = b.title;
+
+                a.href = `blog-detail.html?id=${b._id}`;
+                a.textContent = b.title;
                 h.appendChild(a);
+
                 p.textContent = b.content.length > 150 ? b.content.slice(0, 150) + "..." : b.content;
-                small.textContent = `By ${b.author?.name || "Unknown"} • ${new Date(b.createdAt).toLocaleDateString()}`;
+                small.textContent = `${b.category || "General"} • By ${b.author?.name || "Unknown"} • ${new Date(b.createdAt).toLocaleDateString()}`;
+
                 div.append(h, p, small);
                 box.appendChild(div);
             });
@@ -69,6 +102,7 @@
                 },
                 body: JSON.stringify({
                     title: document.getElementById("title").value,
+                    category: document.getElementById("category").value,
                     content: document.getElementById("content").value,
                 }),
             });
@@ -79,6 +113,13 @@
                 loadBlogs();
             }
         });
+
+        let timer;
+        document.getElementById("search").addEventListener("input", () => {
+            clearTimeout(timer);
+            timer = setTimeout(loadBlogs, 300);
+        });
+        document.getElementById("filter").addEventListener("change", loadBlogs);
 
         loadBlogs();
     </script>
